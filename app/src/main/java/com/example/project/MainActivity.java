@@ -8,10 +8,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.project.databinding.ActivityMainBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private FirebaseAuth mAuth = null;
+    private static final int RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,11 +24,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.txtView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                binding.txtView.setText("안녕");
-            }
-        });
+        mAuth = FirebaseAuth.getInstance();
     }
 }
