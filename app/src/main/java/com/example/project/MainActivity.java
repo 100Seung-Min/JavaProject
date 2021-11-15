@@ -39,7 +39,15 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
+        binding.txtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
+
     }
     public void onStart() {
         super.onStart();
