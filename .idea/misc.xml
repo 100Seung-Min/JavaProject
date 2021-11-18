@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/toolbar.xml" value="0.22395833333333334" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/user_proifle_img.xml" value="0.26979166666666665" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/activity_main.xml" value="0.2390625" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/botton_navigation_menu.xml" value="0.2078125" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/slide_item.xml" value="0.176" />
       </map>
     </option>
   </component>
