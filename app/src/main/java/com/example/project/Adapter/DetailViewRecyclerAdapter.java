@@ -30,7 +30,7 @@ public class DetailViewRecyclerAdapter extends RecyclerView.Adapter<Holder> {
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        holder.userName.setText("안녕");
+        holder.onBind(data.get(position));
     }
 
     @Override
@@ -51,6 +51,7 @@ class Holder extends RecyclerView.ViewHolder{
     ImageView detailImg;
     ImageView setting;
     ImageView favorite;
+
     public Holder(@NonNull View itemView) {
         super(itemView);
         userName = itemView.findViewById(R.id.user_name_txt);
@@ -58,5 +59,9 @@ class Holder extends RecyclerView.ViewHolder{
         detailImg = itemView.findViewById(R.id.detail_img);
         setting = itemView.findViewById(R.id.detail_setting_img);
         favorite = itemView.findViewById(R.id.favorite_img);
+    }
+
+    public void onBind(DetailViewData item){
+        userName.setText(item.userId);
     }
 }
