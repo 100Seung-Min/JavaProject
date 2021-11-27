@@ -50,6 +50,7 @@
         android:background="#C4C4C4"/>
 
     <LinearLayout
+        android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -60,7 +61,25 @@
             android:id="@+id/favorite_img"
             android:layout_width="45dp"
             android:layout_height="match_parent"
-            android:src="@drawable/favorite"/>
+            android:src="@drawable/favorite"
+            android:layout_marginStart="10dp"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/bookmark"
+            android:layout_marginEnd="10dp"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

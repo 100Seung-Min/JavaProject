@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:title="home"
+        android:icon="@drawable/ic_baseline_home_24"/>
+    <item
+        android:id="@+id/profile"
+        android:title="profile"
+        android:enabled="true"
+        android:icon="@drawable/profile"/>
+    <item
+        android:id="@+id/rangking"
+        android:title="rangking"
+        android:enabled="true"
+        android:icon="@drawable/ranking"/>
+
+</menu>

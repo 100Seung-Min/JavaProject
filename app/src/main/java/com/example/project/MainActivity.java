@@ -2,36 +2,24 @@ package com.example.project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.viewbinding.ViewBinding;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.Button;
+import android.view.MenuItem;
 
-import com.example.project.Adapter.DetailViewRecyclerAdapter;
+import com.example.project.Fragment.AddPhoto;
+import com.example.project.Fragment.ShowSns;
 import com.example.project.databinding.ActivityMainBinding;
-import com.example.project.model.DetailViewData;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
-
-import java.util.ArrayList;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    ArrayList<DetailViewData> data;
 
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    private DatabaseReference reference = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +27,24 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        data = new ArrayList<>();
-        DetailViewData a = new DetailViewData("안녕", "바보", "안녕", 1, 2, 3);
-        data.add(a);
-        data.add(a);
-        data.add(a);
+        getSupportFragmentManager().beginTransaction().add(R.id.frame_1, new ShowSns()).commit();
 
-        DetailViewRecyclerAdapter adapter = new DetailViewRecyclerAdapter(this ,data);
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        binding.recyclerview.setAdapter(adapter);
+        binding.mainBottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new ShowSns()).commit();
+                        break;
+                    case R.id.rangking:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new AddPhoto()).commit();
+                        break;
+                    case R.id.profile:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new AddPhoto()).commit();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 }
