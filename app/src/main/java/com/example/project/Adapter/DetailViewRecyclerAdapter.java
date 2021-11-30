@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.project.R;
 import com.example.project.model.DetailViewData;
 
@@ -25,7 +26,7 @@ public class DetailViewRecyclerAdapter extends RecyclerView.Adapter<Holder> {
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.slide_item, parent, false);
-        return new Holder(view);
+        return new Holder(view, context);
     }
 
     @Override
@@ -51,14 +52,16 @@ class Holder extends RecyclerView.ViewHolder{
     ImageView detailImg;
     ImageView setting;
     ImageView favorite;
+    Context context;
 
-    public Holder(@NonNull View itemView) {
+    public Holder(@NonNull View itemView, Context context) {
         super(itemView);
         userName = itemView.findViewById(R.id.user_name_txt);
         userProfile = itemView.findViewById(R.id.user_profile_img);
         detailImg = itemView.findViewById(R.id.detail_img);
         setting = itemView.findViewById(R.id.detail_setting_img);
         favorite = itemView.findViewById(R.id.favorite_img);
+        this.context = context;
     }
 
     public void onBind(DetailViewData item){

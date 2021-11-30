@@ -6,7 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.project.Fragment.AddPhoto;
+import com.example.project.Fragment.Profile;
+import com.example.project.Fragment.Ranking;
 import com.example.project.Fragment.ShowSns;
 import com.example.project.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +28,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.mainBottomNavigation.setItemIconTintList(null);
+
+        setSupportActionBar(binding.mainToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         getSupportFragmentManager().beginTransaction().add(R.id.frame_1, new ShowSns()).commit();
 
         binding.mainBottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -37,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new ShowSns()).commit();
                         break;
                     case R.id.rangking:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new AddPhoto()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new Ranking()).commit();
                         break;
                     case R.id.profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new AddPhoto()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new Profile()).commit();
                         break;
                 }
                 return true;

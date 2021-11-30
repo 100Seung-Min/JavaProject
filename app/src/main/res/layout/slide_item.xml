@@ -35,21 +35,24 @@
         <ImageView
             android:id="@+id/detail_setting_img"
             android:layout_width="40dp"
-            android:layout_height="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/ic_baseline_more_horiz_24"
             android:layout_marginEnd="10dp"/>
     </LinearLayout>
     
     <ImageView
+        android:layout_marginTop="10dp"
         android:id="@+id/detail_img"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_layout"
-        android:background="#C4C4C4"/>
+        android:background="@drawable/view_sns_background"/>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
