@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/add_photo_background.xml" value="0.1578125" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/login_btn_backgroung.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/login_input_background.xml" value="0.22760416666666666" />
@@ -14,6 +15,10 @@
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/ranking_second.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/ranking_ten.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/ranking_third.xml" value="0.22760416666666666" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/signup_background.xml" value="0.1765625" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/signup_check_btn_background.xml" value="0.1765625" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/signup_edittext_background_first.xml" value="0.1765625" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/signup_edittext_background_second.xml" value="0.1765625" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/splash_background.xml" value="0.22760416666666666" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/toolbar.xml" value="0.22395833333333334" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/drawable/toolbar_background.xml" value="0.109375" />
@@ -24,19 +29,24 @@
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/font/jalnan.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/font/jalnan_font.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/font/roboto_font.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/activity_add_photo.xml" value="0.176" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/activity_find_pw.xml" value="0.109375" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/activity_login.xml" value="0.176" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/activity_main.xml" value="0.3678516228748068" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/activity_other_user.xml" value="0.13958333333333334" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/activity_sign_up.xml" value="0.152" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/botton_navigation_menu.xml" value="0.2078125" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/fragment_add_photo.xml" value="0.22604166666666667" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/fragment_profile.xml" value="0.6858789625360231" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/fragment_ranking.xml" value="0.21145833333333333" />
-        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/fragment_show_sns.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/fragment_show_sns.xml" value="0.2" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/fragment_sns.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/ranking_item.xml" value="0.21145833333333333" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/slide_item.xml" value="0.176" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/layout/splash.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/menu/bottom_navigation.xml" value="0.2125" />
         <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
+        <entry key="..\:/Users/user/Documents/GitHub/JavaProject/app/src/main/res/menu/toolbar_menu.xml" value="0.14166666666666666" />
       </map>
     </option>
   </component>

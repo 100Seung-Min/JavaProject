@@ -64,25 +64,21 @@
             android:id="@+id/favorite_img"
             android:layout_width="45dp"
             android:layout_height="match_parent"
-            android:src="@drawable/favorite"
-            android:layout_marginStart="10dp"/>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/bookmark"
-            android:layout_marginEnd="10dp"/>
+            android:src="@drawable/ic_baseline_star_outline_24"
+            android:layout_marginStart="15dp"/>
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="크하하"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:fontFamily="@font/abeezee_font"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_layout"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detail_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

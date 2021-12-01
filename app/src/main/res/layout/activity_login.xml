@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splash"/>
+        android:background="@drawable/splash"/>
 
     <TextView
         android:id="@+id/title"
@@ -34,7 +34,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:paddingStart="60dp"
-        android:hint="이메일 아이디 입력"
+        android:hint="아이디 입력"
         android:textColorHint="@color/black"
         android:fontFamily="@font/abeezee_font"
         android:textColor="@color/black"

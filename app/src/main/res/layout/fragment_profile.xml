@@ -1,14 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.Profile">
 
-    <!-- TODO: Update blank fragment layout -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_profile_img"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:src="@mipmap/ic_launcher"/>
+
     <TextView
+        android:id="@+id/user_name_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="유저이름"
+        android:textSize="23sp"
+        android:gravity="center"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/user_profile_img"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/abeezee_font"
+        android:textColor="@color/black"/>
+    <LinearLayout
+        android:id="@+id/divide"
+        android:layout_width="120dp"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/user_name_txt"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/user_profile_img"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/detail_uesr_profile"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/divide"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/user_profile_img"
+        android:weightSum="3">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="좋아요"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/courgette_font"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/favorite_count"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="999"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_font"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="팔로워"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/courgette_font"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/follower_count"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="999"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_font"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="팔로우"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/courgette_font"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/follow_count"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:text="999"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_font"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/show_content"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:textColor="#043BFF"
+        android:text="#문구를 적어주세요"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_img"
+        app:layout_constraintRight_toRightOf="@id/user_profile_img"
+        app:layout_constraintLeft_toLeftOf="@id/user_profile_img"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:visibility="gone"
+        android:id="@+id/edit_content"
+        android:layout_width="150dp"
+        android:textSize="14sp"
+        android:layout_height="30dp"
+        android:textColor="#043BFF"
+        android:background="@null"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_img"
+        app:layout_constraintRight_toRightOf="@id/user_profile_img"
+        app:layout_constraintLeft_toLeftOf="@id/user_profile_img"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/edit_profile_btn"
+        android:layout_marginTop="10dp"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:text="프로필 편집"
+        android:textColor="@color/black"
+        android:fontFamily="@font/abeezee_font"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/detail_uesr_profile"
+        app:layout_constraintRight_toRightOf="@id/detail_uesr_profile"
+        app:layout_constraintLeft_toLeftOf="@id/detail_uesr_profile"/>
+    <Button
+        android:id="@+id/profile_save_btn"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:layout_width="80dp"
+        android:layout_height="35dp"
+        android:text="저장하기"
+        android:textColor="@color/black"
+        android:fontFamily="@font/abeezee_font"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@id/detail_uesr_profile"
+        app:layout_constraintRight_toRightOf="@id/detail_uesr_profile"
+        app:layout_constraintLeft_toLeftOf="@id/detail_uesr_profile"/>4
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="260dp"/>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
