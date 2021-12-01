@@ -97,6 +97,7 @@ public class Profile extends Fragment {
                 binding.editContent.setVisibility(View.GONE);
                 String content = binding.editContent.getText().toString();
                 binding.showContent.setText(content);
+                binding.progressbar.setVisibility(View.VISIBLE);
                 String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                 if(contentid.isEmpty()){
                     storage.getReference().child("profile").child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -112,6 +113,7 @@ public class Profile extends Fragment {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
+                                                    binding.progressbar.setVisibility(View.GONE);
                                                     reProfile();
                                                 }
                                             });
@@ -134,6 +136,7 @@ public class Profile extends Fragment {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
+                                                    binding.progressbar.setVisibility(View.GONE);
                                                     reProfile();
                                                 }
                                             });

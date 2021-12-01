@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.project.Fragment.Profile;
 import com.example.project.Fragment.Ranking;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     String nickname;
+    long pressTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor edit = preferences.edit();
 
         nickname = preferences.getString("username", "");
-        Log.d("여기", "onCreate: " + nickname);
 
         binding.mainBottomNavigation.setItemIconTintList(null);
 
@@ -60,5 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    // 뒤로가기 두번 시 종료
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        long intervalTime = currentTime - pressTime;
+        if(intervalTime < 2000) {
+            super.onBackPressed();
+            finishAffinity();
+        } else{
+            pressTime = currentTime;
+            Toast.makeText(getApplicationContext(), "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

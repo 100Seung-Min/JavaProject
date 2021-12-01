@@ -80,6 +80,7 @@ public class AddPhoto extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "오늘의 패션을 설명해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    binding.progressbar.setVisibility(View.VISIBLE);
                     String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                     storage.getReference().child("image").child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -94,6 +95,7 @@ public class AddPhoto extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
+                                                    binding.progressbar.setVisibility(View.GONE);
                                                     finish();
                                                 }
                                             });

@@ -22,6 +22,7 @@ public class Login extends AppCompatActivity {
     ActivityLoginBinding binding;
 
     private FirebaseAuth auth = null;
+    long pressTime = 0;
 
     @Override
     protected void onStart() {
@@ -83,6 +84,20 @@ public class Login extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
+        }
+    }
+
+    // 뒤로가기 두번 시 종료
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        long intervalTime = currentTime - pressTime;
+        if(intervalTime < 2000) {
+            super.onBackPressed();
+            finishAffinity();
+        } else{
+            pressTime = currentTime;
+            Toast.makeText(getApplicationContext(), "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -97,7 +97,6 @@ class DetailHolder extends RecyclerView.ViewHolder{
         });
         userName.setText(item.userId);
         Glide.with(context).load(item.imageUrl).into(detailImg);
-        Glide.with(context).load(user.userProfile).into(userProfile);
         content.setText(item.content);
         boolean mode = check_name(item, name);
         if(mode == true){
@@ -132,7 +131,6 @@ class DetailHolder extends RecyclerView.ViewHolder{
     }
 
     private void load_profile(String name){
-        Log.d("여기", "onEvent: ");
         firestore.collection("profile").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -143,6 +141,7 @@ class DetailHolder extends RecyclerView.ViewHolder{
                         contentid = data.getId();
                     }
                 }
+                Glide.with(context).load(user.userProfile).into(userProfile);
             }
         });
     }
