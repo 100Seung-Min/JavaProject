@@ -25,12 +25,6 @@ public class Login extends AppCompatActivity {
     long pressTime = 0;
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        login(auth.getCurrentUser());
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());

@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,11 +16,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.project.Adapter.MyImageRcyclerAdapter;
+import com.example.project.Login;
 import com.example.project.R;
+import com.example.project.Splash;
+import com.example.project.ViewFollow;
 import com.example.project.databinding.FragmentProfileBinding;
 import com.example.project.model.DetailViewData;
 import com.example.project.model.ProfileData;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,44 +41,30 @@ import java.util.Date;
 public class Profile extends Fragment {
 
     FragmentProfileBinding binding;
-    String name;
     FirebaseFirestore firestore;
     FirebaseStorage storage;
-    ProfileData user;
+    ProfileData user = new ProfileData();
     Uri uri;
     int mode = 0;
     String contentid = "";
-
-    public Profile(String name){
-        this.name = name;
-    }
+    FirebaseAuth auth;
+    MyImageRcyclerAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        binding.userNameTxt.setText(name);
 
         firestore = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        user = new ProfileData(name, "", 0,0,0,"");
+        adapter = new MyImageRcyclerAdapter(getContext(), auth.getCurrentUser().getUid());
+        binding.myImgRecyclerview.setAdapter(adapter);
+        binding.myImgRecyclerview.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-        firestore.collection("profile").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for(DocumentSnapshot data : value.getDocuments()){
-                    ProfileData item = data.toObject(ProfileData.class);
-                    if(item.userId.equals(name)){
-                        user = item;
-                        contentid = data.getId();
-                    }
-                }
-                reProfile();
-            }
-        });
-
+        get_profile();
 
         binding.editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +77,7 @@ public class Profile extends Fragment {
                 binding.profileSaveBtn.setVisibility(View.VISIBLE);
                 binding.showContent.setVisibility(View.GONE);
                 binding.editContent.setVisibility(View.VISIBLE);
+                binding.editContent.setText(binding.showContent.getText());
             }
         });
 
@@ -99,7 +93,7 @@ public class Profile extends Fragment {
                 binding.showContent.setText(content);
                 binding.progressbar.setVisibility(View.VISIBLE);
                 String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                if(contentid.isEmpty()){
+                if(uri != null){
                     storage.getReference().child("profile").child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -107,14 +101,13 @@ public class Profile extends Fragment {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String imgurl = uri.toString();
-                                    ProfileData data = new ProfileData(name, imgurl, user.favorite, user.follow, user.follower, content);
+                                    ProfileData data = new ProfileData(user.userId, imgurl, user.favorite, user.follow, user.follower, content, user.uid, user.follows, user.follwers);
                                     firestore.collection("profile")
-                                            .document().set(data)
+                                            .document(contentid).set(data)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
-                                                    binding.progressbar.setVisibility(View.GONE);
-                                                    reProfile();
+                                                    get_profile();
                                                 }
                                             });
                                 }
@@ -122,28 +115,16 @@ public class Profile extends Fragment {
                         }
                     });
                 }
-                else {
-                    storage.getReference().child("profile").child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                else{
+                    ProfileData data = new ProfileData(user.userId, user.userProfile, user.favorite, user.follow, user.follower, content, user.uid, user.follows, user.follows);
+                    firestore.collection("profile")
+                            .document(contentid).set(data)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
-                                public void onSuccess(Uri uri) {
-                                    String imgurl = uri.toString();
-                                    ProfileData data = new ProfileData(name, imgurl, user.favorite, user.follow, user.follower, content);
-                                    firestore.collection("profile")
-                                            .document(contentid).set(data)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    binding.progressbar.setVisibility(View.GONE);
-                                                    reProfile();
-                                                }
-                                            });
+                                public void onSuccess(Void unused) {
+                                    get_profile();
                                 }
                             });
-                        }
-                    });
                 }
             }
         });
@@ -160,6 +141,35 @@ public class Profile extends Fragment {
             }
         });
 
+        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                Intent intent = new Intent(getContext(), Login.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.followerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ViewFollow.class);
+                intent.putExtra("users", user.follwers);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
+
+        binding.followingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ViewFollow.class);
+                intent.putExtra("users", user.follows);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -173,14 +183,35 @@ public class Profile extends Fragment {
     }
 
     private void reProfile(){
+        binding.progressbar.setVisibility(View.GONE);
         Glide.with(getContext())
                 .load(user.userProfile)
                 .into(binding.userProfileImg);
-        if(user.content != null){
+        if(user.content.equals("")){
+            binding.showContent.setText("#문구를 입력해주세요");
+        }
+        else{
             binding.showContent.setText(user.content);
         }
+        binding.userNameTxt.setText(user.userId);
         binding.followCount.setText(String.valueOf(user.follow));
         binding.followerCount.setText(String.valueOf(user.follower));
         binding.favoriteCount.setText(String.valueOf(user.favorite));
+    }
+
+    private void get_profile(){
+        firestore.collection("profile").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot data : queryDocumentSnapshots.getDocuments()){
+                    ProfileData item = data.toObject(ProfileData.class);
+                    if(item.uid.equals(auth.getCurrentUser().getUid())){
+                        user = item;
+                        contentid = data.getId();
+                    }
+                }
+                reProfile();
+            }
+        });
     }
 }

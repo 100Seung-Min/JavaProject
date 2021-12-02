@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.example.project.OtherUser;
 import com.example.project.R;
 import com.example.project.model.DetailViewData;
 import com.example.project.model.ProfileData;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -73,6 +75,7 @@ class DetailHolder extends RecyclerView.ViewHolder{
     Context context;
     String contentid;
     ProfileData user = new ProfileData();
+    boolean mode;
 
     public DetailHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -87,18 +90,24 @@ class DetailHolder extends RecyclerView.ViewHolder{
 
     public void onBind(DetailViewData item, String name,  String contentId){
         firestore = FirebaseFirestore.getInstance();
-        load_profile(name);
+        load_profile(name, item.uid);
         userProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, OtherUser.class);
-                context.startActivity(intent);
+                if(!item.uid.equals(name)){
+                    Intent intent = new Intent(context, OtherUser.class);
+                    intent.putExtra("uid", item.uid);
+                    context.startActivity(intent);
+                }
             }
         });
+        if(!item.uid.equals(name)){
+            setting.setVisibility(View.GONE);
+        }
         userName.setText(item.userId);
         Glide.with(context).load(item.imageUrl).into(detailImg);
         content.setText(item.content);
-        boolean mode = check_name(item, name);
+        mode = check_name(item, name);
         if(mode == true){
             favorite.setImageResource(R.drawable.ic_baseline_star_rate_24);
         }
@@ -108,15 +117,20 @@ class DetailHolder extends RecyclerView.ViewHolder{
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                load_profile(name, item.uid);
+                mode = check_name(item, name);
                 if(mode == true){
                     favorite.setImageResource(R.drawable.ic_baseline_star_outline_24);
                     item.favorites.remove(name);
+                    user.favorite -= 1;
                 }
                 else{
                     favorite.setImageResource(R.drawable.ic_baseline_star_rate_24);
+                    user.favorite += 1;
                     item.favorites.add(name);
                 }
                 firestore.collection("photo").document(contentId).set(item);
+                firestore.collection("profile").document(contentid).set(user);
             }
         });
     }
@@ -130,18 +144,18 @@ class DetailHolder extends RecyclerView.ViewHolder{
         return false;
     }
 
-    private void load_profile(String name){
-        firestore.collection("profile").addSnapshotListener(new EventListener<QuerySnapshot>() {
+    private void load_profile(String name, String uid){
+        firestore.collection("profile").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for(DocumentSnapshot data : value.getDocuments()){
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot data : queryDocumentSnapshots.getDocuments()){
                     ProfileData item = data.toObject(ProfileData.class);
-                    if(item.userId.equals(name)){
+                    if(item.uid.equals(uid)){
                         user = item;
                         contentid = data.getId();
+                        Glide.with(context).load(item.userProfile).into(userProfile);
                     }
                 }
-                Glide.with(context).load(user.userProfile).into(userProfile);
             }
         });
     }

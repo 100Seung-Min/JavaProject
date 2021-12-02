@@ -22,6 +22,9 @@ import com.example.project.AddPhoto;
 import com.example.project.R;
 import com.example.project.databinding.FragmentShowSnsBinding;
 import com.example.project.model.DetailViewData;
+import com.example.project.model.ProfileData;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,11 +46,7 @@ public class ShowSns extends Fragment {
     SnapHelper snapHelper;
     FirebaseFirestore firestore;
     DetailViewRecyclerAdapter adapter;
-    String name;
-
-    public ShowSns(String name){
-        this.name = name;
-    }
+    FirebaseAuth auth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,12 +54,13 @@ public class ShowSns extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentShowSnsBinding.inflate(inflater, container, false);
         firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         //리사이클러뷰 리스트 설정
         init_list();
 
         //리사이클러뷰 기초 설정
-        adapter = new DetailViewRecyclerAdapter(getContext(), data, name, contentId);
+        adapter = new DetailViewRecyclerAdapter(getContext(), data, auth.getCurrentUser().getUid(), contentId);
         binding.snsRecyclerview.setAdapter(adapter);
         binding.snsRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.snsRecyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -90,7 +90,6 @@ public class ShowSns extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AddPhoto.class);
-                intent.putExtra("username", name);
                 startActivity(intent);
             }
         });
@@ -99,12 +98,12 @@ public class ShowSns extends Fragment {
     }
 
     private void init_list(){
-        firestore.collection("photo").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        firestore.collection("photo").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 data.clear();
                 contentId.clear();
-                for(DocumentSnapshot document : value.getDocuments()){
+                for(DocumentSnapshot document : queryDocumentSnapshots.getDocuments()){
                     DetailViewData item = document.toObject(DetailViewData.class);
                     data.add(item);
                     contentId.add(document.getId());

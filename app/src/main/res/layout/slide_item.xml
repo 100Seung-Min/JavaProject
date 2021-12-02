@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="20dp">
 
     <LinearLayout
         android:id="@+id/user_layout"
@@ -18,8 +19,7 @@
             android:layout_marginStart="10dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_gravity="center_vertical"/>
         <TextView
             android:id="@+id/user_name_txt"
             android:layout_marginStart="10dp"
@@ -42,7 +42,7 @@
     </LinearLayout>
     
     <ImageView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/detail_img"
         android:layout_width="match_parent"
         android:layout_height="350dp"
@@ -52,7 +52,7 @@
         android:background="@drawable/view_sns_background"/>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -70,7 +70,6 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:text="크하하"
             android:gravity="center_vertical"
             android:textSize="15sp"
             android:fontFamily="@font/abeezee_font"

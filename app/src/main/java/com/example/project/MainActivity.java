@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    String nickname;
     long pressTime = 0;
 
     @Override
@@ -32,30 +31,25 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SharedPreferences preferences = getSharedPreferences("NAME", MODE_PRIVATE);
-        SharedPreferences.Editor edit = preferences.edit();
-
-        nickname = preferences.getString("username", "");
-
         binding.mainBottomNavigation.setItemIconTintList(null);
 
         setSupportActionBar(binding.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.frame_1, new ShowSns(nickname)).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.frame_1, new ShowSns()).commit();
 
         binding.mainBottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new ShowSns(nickname)).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new ShowSns()).commit();
                         break;
                     case R.id.rangking:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new Ranking()).commit();
                         break;
                     case R.id.profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new Profile(nickname)).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_1, new Profile()).commit();
                         break;
                 }
                 return true;

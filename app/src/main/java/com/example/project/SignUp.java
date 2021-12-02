@@ -6,20 +6,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.project.databinding.ActivitySignUpBinding;
+import com.example.project.model.ProfileData;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class SignUp extends AppCompatActivity {
 
     ActivitySignUpBinding binding;
 
     private FirebaseAuth auth;
+    FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +35,7 @@ public class SignUp extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         auth = FirebaseAuth.getInstance();
-
-        SharedPreferences preferences = getSharedPreferences("NAME", MODE_PRIVATE);
-        SharedPreferences.Editor edit = preferences.edit();
+        firestore = FirebaseFirestore.getInstance();
 
         binding.signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +58,14 @@ public class SignUp extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                edit.putString("username", nickName);
-                                edit.commit();
-                                finish();
-                            }
+                                Log.d("여기", "onComplete: " + auth.getCurrentUser().getUid());
+                                firestore.collection("profile").document().set(new ProfileData(nickName, "", 0,0,0,"", auth.getCurrentUser().getUid(), new ArrayList<String>(), new ArrayList<String>())).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        finish();
+                                    }
+                                });
+                                                            }
                             else {
                                 Toast.makeText(getApplicationContext(), "계정생성 실패", Toast.LENGTH_SHORT).show();
                             }

@@ -5,7 +5,108 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/rangking_first"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:id="@+id/ranking_first"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="1"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/courgette_font"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_first"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/userId_first"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:paddingStart="30dp"
+            android:text="유저아이디"
+            android:gravity="center_vertical"
+            android:textSize="22sp"
+            android:fontFamily="@font/abeezee_font"
+            android:textColor="@color/black"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/favorite_count_first"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="99999"
+            android:textSize="22sp"
+            android:fontFamily="@font/roboto_font"
+            android:textColor="#4504FF"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/rangking_second"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:id="@+id/ranking_second"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="2"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/courgette_font"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_second"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/userId_second"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:paddingStart="30dp"
+            android:text="유저아이디"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:fontFamily="@font/abeezee_font"
+            android:textColor="@color/black"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/favorite_count_second"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="99999"
+            android:textSize="20sp"
+            android:fontFamily="@font/roboto_font"
+            android:textColor="#4504FF"/>
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/rangking_third"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -14,12 +115,71 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="horizontal"
         android:weightSum="10">
+        <TextView
+            android:id="@+id/ranking_third"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="3"
+            android:gravity="center"
+            android:textSize="27sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/courgette_font"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_third"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/userId_third"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:paddingStart="30dp"
+            android:text="유저아이디"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:fontFamily="@font/abeezee_font"
+            android:textColor="@color/black"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/favorite_count_third"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="99999"
+            android:textSize="18sp"
+            android:fontFamily="@font/roboto_font"
+            android:textColor="#4504FF"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/rangking"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        <TextView
+            android:id="@+id/ranking"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="3"
+            android:gravity="center"
+            android:textSize="23sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/courgette_font"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_profile"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_weight="1"/>
         <TextView
             android:id="@+id/userId"
             android:layout_weight="4"
@@ -27,22 +187,20 @@
             android:paddingStart="30dp"
             android:text="유저아이디"
             android:gravity="center_vertical"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:fontFamily="@font/abeezee_font"
             android:textColor="@color/black"
             android:layout_height="match_parent"/>
 
         <TextView
+            android:id="@+id/favorite_count"
             android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="99999"
-            android:textSize="19sp"
+            android:textSize="15sp"
             android:fontFamily="@font/roboto_font"
             android:textColor="#4504FF"/>
-
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

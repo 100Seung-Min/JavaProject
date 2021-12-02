@@ -17,9 +17,14 @@ import android.widget.Toast;
 
 import com.example.project.databinding.ActivityAddPhotoBinding;
 import com.example.project.model.DetailViewData;
+import com.example.project.model.ProfileData;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
@@ -35,7 +40,7 @@ public class AddPhoto extends AppCompatActivity {
     FirebaseFirestore firestore;
     FirebaseAuth auth;
     Intent intent;
-    String name;
+    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +48,21 @@ public class AddPhoto extends AppCompatActivity {
         binding = ActivityAddPhotoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        name = getIntent().getStringExtra("username");
-        Log.d("여기1", "onCreate: " + name);
-
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+
+        firestore.collection("profile").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot data : queryDocumentSnapshots.getDocuments()){
+                    ProfileData item = data.toObject(ProfileData.class);
+                    if(item.uid.equals(auth.getCurrentUser().getUid())){
+                        name = item.userId;
+                    }
+                }
+            }
+        });
 
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -72,6 +86,7 @@ public class AddPhoto extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             case R.id.upload:
+                Log.d("여기", "onOptionsItemSelected: " + name);
                 String content = binding.addPhotoTxt.getText().toString();
                 if(uri == null){
                     Toast.makeText(getApplicationContext(), "사진을 선택해주세요.", Toast.LENGTH_SHORT).show();
@@ -80,29 +95,33 @@ public class AddPhoto extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "오늘의 패션을 설명해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    binding.progressbar.setVisibility(View.VISIBLE);
-                    String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-                    storage.getReference().child("image").child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String imgurl = uri.toString();
-                                    DetailViewData data = new DetailViewData(name, "", imgurl, 0, content, new ArrayList<String>());
-                                    firestore.collection("photo")
-                                            .document().set(data)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    binding.progressbar.setVisibility(View.GONE);
-                                                    finish();
-                                                }
-                                            });
-                                }
-                            });
-                        }
-                    });
+                    if(name != ""){
+                        binding.progressbar.setVisibility(View.VISIBLE);
+                        String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                        storage.getReference().child("image").child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String imgurl = uri.toString();
+                                        DetailViewData data = new DetailViewData(name, "", imgurl, 0, content, new ArrayList<String>(), auth.getCurrentUser().getUid());
+                                        firestore.collection("photo")
+                                                .document().set(data)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void unused) {
+                                                        binding.progressbar.setVisibility(View.GONE);
+                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                });
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
         }
         return true;
