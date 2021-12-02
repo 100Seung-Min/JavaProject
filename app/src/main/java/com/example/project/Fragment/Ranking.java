@@ -38,7 +38,7 @@ public class Ranking extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentRankingBinding.inflate(inflater, container, false);
         firestore = FirebaseFirestore.getInstance();
-        firestore.collection("profile").orderBy("favorite", Query.Direction.DESCENDING).limit(30).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        firestore.collection("profile").orderBy("favorite", Query.Direction.DESCENDING).limit(20).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 rangkingData.clear();

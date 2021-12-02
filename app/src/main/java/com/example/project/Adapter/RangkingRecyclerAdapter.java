@@ -68,6 +68,7 @@ class RangkingHolder extends RecyclerView.ViewHolder{
     TextView top_userId;
     TextView top_favorite;
     ImageView top_profile;
+    TextView top_rank;
 
 
     public RangkingHolder(@NonNull View v, Context context){
@@ -92,6 +93,7 @@ class RangkingHolder extends RecyclerView.ViewHolder{
         top_userId = v.findViewById(R.id.userId);
         top_favorite = v.findViewById(R.id.favorite_count);
         top_profile = v.findViewById(R.id.user_profile);
+        top_rank = v.findViewById(R.id.ranking);
     }
 
     public void onbind(ProfileData item, int ranking){
@@ -114,6 +116,7 @@ class RangkingHolder extends RecyclerView.ViewHolder{
             Glide.with(context).load(item.userProfile).into(third_profile);
         }
         else{
+            top_rank.setText(String.valueOf(ranking + 1));
             top_layout.setVisibility(View.VISIBLE);
             top_userId.setText(item.userId);
             top_favorite.setText(String.valueOf(item.favorite));
