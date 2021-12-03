@@ -3,6 +3,7 @@ package com.example.project;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -39,7 +40,6 @@ public class ViewFollow extends AppCompatActivity {
                     ProfileData item = data.toObject(ProfileData.class);
                     for(String uid : itemlist){
                         if(uid.equals(item.uid)){
-                            Log.d("여기", "onSuccess: " + item.uid);
                             userlist.add(item);
                         }
                     }

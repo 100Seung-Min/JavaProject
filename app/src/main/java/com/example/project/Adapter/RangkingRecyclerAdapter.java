@@ -1,6 +1,7 @@
 package com.example.project.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.project.OtherUser;
 import com.example.project.R;
 import com.example.project.model.ProfileData;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -70,6 +74,8 @@ class RangkingHolder extends RecyclerView.ViewHolder{
     ImageView top_profile;
     TextView top_rank;
 
+    ConstraintLayout ranking_layout;
+
 
     public RangkingHolder(@NonNull View v, Context context){
         super(v);
@@ -94,6 +100,7 @@ class RangkingHolder extends RecyclerView.ViewHolder{
         top_favorite = v.findViewById(R.id.favorite_count);
         top_profile = v.findViewById(R.id.user_profile);
         top_rank = v.findViewById(R.id.ranking);
+        ranking_layout = v.findViewById(R.id.ranking_layout);
     }
 
     public void onbind(ProfileData item, int ranking){
@@ -122,5 +129,16 @@ class RangkingHolder extends RecyclerView.ViewHolder{
             top_favorite.setText(String.valueOf(item.favorite));
             Glide.with(context).load(item.userProfile).into(top_profile);
         }
+        ranking_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                if(!item.uid.equals(auth.getCurrentUser().getUid())){
+                    Intent intent = new Intent(context, OtherUser.class);
+                    intent.putExtra("uid", item.uid);
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 }
